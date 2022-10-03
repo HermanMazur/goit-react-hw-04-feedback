@@ -5,15 +5,42 @@ import {FeedbackOptions} from 'components/FeedbackOptions/FeedbackOptions';
 import {Notification} from 'components/Notification/Notification';
 
 
-class Counter extends Component{
-  state = {
-  good: 0,
-  neutral: 0,
-  bad: 0
-}
+// class Counter extends Component{
+//   state = {
+//   good: 0,
+//   neutral: 0,
+//   bad: 0
+// }
 
-  onLeaveFeedback = options => {
-    this.setState({ [options]: this.state[options] + 1})
+export default function Counter() {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+};
+
+const feedbackStatus = { good, neutral, bad };
+
+//   onLeaveFeedback = options => {
+//     this.setState({ [options]: this.state[options] + 1})
+// }
+
+  const onLeaveFeedback = options => {
+    switch (options) { 
+      case 'good':
+        setGood(good + 1);
+        break;
+      
+      case 'neutral':
+        setNeutral(neutral + 1);
+        break;
+      
+      case 'bad':
+        setBad(bad + 1);
+        break;
+      
+      default:
+        return;
+    }
 }
   
 countTotalFeedback = () => {
@@ -29,13 +56,12 @@ countPositiveFeedbackPercentage = () => {
   return percentage;
 };
 
-render() {
   return (
     <>
       <Section title="Please leave feedback">
         <FeedbackOptions
-          options={Object.keys(this.state)}
-          onLeaveFeedback={this.onLeaveFeedback}
+          options={Object.keys(feedbackStatus)}
+          onLeaveFeedback={onLeaveFeedback}
         />
       </Section>
       <Section title="Statistics">
@@ -54,6 +80,5 @@ render() {
     </>
   );
         }
-      }
+      
 
-export default Counter;
